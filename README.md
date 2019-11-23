@@ -1,4 +1,6 @@
-# NetCracker_Person
+# NetCracker course | Java
 
+Homework NetCracker course from 01.10.2019.
 
-[![](https://jitpack.io/v/MaickelVRN/NCLab.svg)](https://jitpack.io/#MaickelVRN/NCLab)
+## Source: MaickelVRN/NCLab
+[link here](https://github.com/MaickelVRN/NCLab) 
