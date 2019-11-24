@@ -1,5 +1,6 @@
 package com.netcracker.edu.trainee.firstLab.service.repository;
 
+import com.netcracker.edu.trainee.firstLab.sort.BubbleSort;
 import lombok.EqualsAndHashCode;
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.repository.IRepository;
@@ -38,7 +39,6 @@ public class DynamicArray<T> implements IRepository<T> {
             resize(array.length * 2);
         }
         array[pointer++] = person;
-
     }
 
     /**
@@ -55,7 +55,6 @@ public class DynamicArray<T> implements IRepository<T> {
         }
         array[index] = person;
         pointer++;
-
     }
 
     /**
@@ -112,20 +111,13 @@ public class DynamicArray<T> implements IRepository<T> {
     }
 
     /**
-     *
-     * @param comparator
+     * @param comparator - comparator to get comparison rules
+     *                   Sorts an array of objects using comparator by bubble sorting
      */
     @Override
     public void sortBy(Comparator<T> comparator) {
-       /* for (int i = 0; i < size() - 1; i++) {
-            for (int j = 0; j < size() - i - 1; j++) {
-                if (comparator.compare(array[j], array[j + 1]) > 0) {
-                    T temp = (T) array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-                }
-            }
-        }*/
+        BubbleSort<T> bubbleSort = new BubbleSort<>();
+        bubbleSort.doBubbleSort((T[]) array, comparator);
     }
 
     /**
@@ -142,7 +134,6 @@ public class DynamicArray<T> implements IRepository<T> {
         }
         return repository;
     }
-
 
     /**
      * @param newLength a method that increases the size of an array when it overflows

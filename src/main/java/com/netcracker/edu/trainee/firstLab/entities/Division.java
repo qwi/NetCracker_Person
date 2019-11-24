@@ -14,7 +14,6 @@ public class Division implements IDivision {
     private String name;
 
     /**
-     *
      * @return random int value in the range 0-200000
      */
     public static int randomID(){
