@@ -1,6 +1,8 @@
 package com.netcracker.edu.trainee.firstLab.service.repository;
 
-import com.netcracker.edu.trainee.firstLab.sort.BubbleSort;
+import com.netcracker.edu.trainee.firstLab.service.annotations.LabInjector;
+import com.netcracker.edu.trainee.firstLab.service.sort.BubbleSort;
+import com.netcracker.edu.trainee.firstLab.service.sort.ISorter;
 import lombok.EqualsAndHashCode;
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.repository.IRepository;
@@ -13,6 +15,8 @@ import java.util.function.Predicate;
 @EqualsAndHashCode
 public class DynamicArray<T> implements IRepository<T> {
 
+    @LabInjector
+    private ISorter<T> sort;
     /**
      * INIT_SIZE - a field that specifies the size of the array
      */
@@ -61,6 +65,7 @@ public class DynamicArray<T> implements IRepository<T> {
      * @param index the number of the item you want to return
      * @return an element from an array by index
      */
+    @SuppressWarnings("unchecked")
     public T get(int index) {
         return (T) array[index];
     }
@@ -71,6 +76,7 @@ public class DynamicArray<T> implements IRepository<T> {
      *              If, after deleting an element, the number of elements in CUT_RITE
      *              is less than the size of the internal array, IT is reduced to save space
      */
+    @SuppressWarnings("unchecked")
     public T delete(int index) {
         T deleteItem = (T) array[index];
         for (int i = index; i < pointer; i++)
@@ -88,6 +94,7 @@ public class DynamicArray<T> implements IRepository<T> {
      * @return the element that previously existed at the specified index
      * Throws ArrayIndexOutOfBoundsException
      */
+    @SuppressWarnings("unchecked")
     public T set(int index, T newValue) {
         if (index < 0 || index >= size()) throw new ArrayIndexOutOfBoundsException();
         T old = (T) array[index];
@@ -106,8 +113,20 @@ public class DynamicArray<T> implements IRepository<T> {
     /**
      * @return a list of persons
      */
+    @SuppressWarnings("unchecked")
     public List<T> toList() {
         return (List<T>) Arrays.asList(array);
+    }
+
+    /**
+     * Sort array by passed sort and comparator.
+     *
+     * @param comparator
+     * @param sort
+     */
+    @SuppressWarnings("unchecked")
+    public void sortBy(Comparator<T> comparator, ISorter sort) {
+        sort.doSort(array, comparator);
     }
 
     /**
@@ -116,14 +135,14 @@ public class DynamicArray<T> implements IRepository<T> {
      */
     @Override
     public void sortBy(Comparator<T> comparator) {
-        BubbleSort<T> bubbleSort = new BubbleSort<>();
-        bubbleSort.doBubbleSort((T[]) array, comparator);
+        sortBy(comparator, sort);
     }
 
     /**
      * @param condition - the condition for the search
      * @return repository with found objects
      */
+    @SuppressWarnings("unchecked")
     @Override
     public IRepository<T> searchBy(Predicate<T> condition) {
         IRepository<T> repository = new DynamicArray<>();
