@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Reflector {
 
-    public static IRepository reflect(IRepository repository) {
+    public static IRepository inject(IRepository repository) {
         Field[] fields = repository.getClass().getDeclaredFields();
         List<Field> reflectedFields = new ArrayList<>();
         String separator = File.separator;
@@ -41,9 +41,7 @@ public class Reflector {
                     field.setAccessible(true);
                     try {
                         field.set(repository, Class.forName(className).newInstance());
-                    } catch (ClassNotFoundException a) {
-                        System.out.println(a.getClass().getName());
-                    } catch (IllegalAccessException a) {
+                    } catch (ClassNotFoundException | IllegalAccessException a) {
                         System.out.println(a.getClass().getName());
                     } catch (InstantiationException e) {
                         e.printStackTrace();

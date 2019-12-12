@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @EqualsAndHashCode
 public class DynamicArray<T> implements IRepository<T> {
@@ -115,6 +116,7 @@ public class DynamicArray<T> implements IRepository<T> {
      */
     @SuppressWarnings("unchecked")
     public List<T> toList() {
+        resize(pointer);
         return (List<T>) Arrays.asList(array);
     }
 

@@ -1,11 +1,14 @@
 package com.netcracker.edu.trainee.firstLab;
 
+import com.netcracker.edu.trainee.firstLab.entities.Person;
 import com.netcracker.edu.trainee.firstLab.service.factory.LabFactory;
 import com.netcracker.edu.trainee.firstLab.service.parser.Parser;
 import com.netcracker.edu.trainee.firstLab.service.repository.DynamicArray;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Application {
@@ -18,13 +21,17 @@ public class Application {
         Parser parser = new Parser(scanner);
 
         DynamicArray dynamicArray = (DynamicArray) parser.parse();
-        //dynamicArray.sortBy(personComparator);
-        /*
-         for (int i = 0; i < dynamicArray.size(); i++) {
+
+        List<Person> persons = new ArrayList<>();
+        persons = dynamicArray.toList();
+        persons.stream().forEach(System.out::println);
+
+
+      /*  for (int i = 0; i < dynamicArray.size(); i++) {
             System.out.println(dynamicArray.get(i));
         }
-
-
+*/
+/*
         IPerson person = factory.createPerson();
         @SuppressWarnings("unchecked")
         DynamicArray<IPerson> dynamicArray2 = (DynamicArray<IPerson>) factory.createRepository(person.getClass());
