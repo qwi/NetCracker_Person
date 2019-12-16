@@ -1,6 +1,7 @@
 package com.netcracker.edu.trainee.firstLab;
 
 import com.netcracker.edu.trainee.firstLab.entities.Person;
+import com.netcracker.edu.trainee.firstLab.service.comparators.PersonComparatorByID;
 import com.netcracker.edu.trainee.firstLab.service.factory.LabFactory;
 import com.netcracker.edu.trainee.firstLab.service.parser.Parser;
 import com.netcracker.edu.trainee.firstLab.service.repository.DynamicArray;
@@ -25,7 +26,6 @@ public class Application {
         List<Person> persons = new ArrayList<>();
         persons = dynamicArray.toList();
         persons.stream().forEach(System.out::println);
-
 
       /*  for (int i = 0; i < dynamicArray.size(); i++) {
             System.out.println(dynamicArray.get(i));

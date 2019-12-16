@@ -2,7 +2,7 @@ package com.netcracker.edu.trainee.firstLab.entities.repository.service.sort;
 
 import com.netcracker.edu.trainee.firstLab.entities.Person;
 import com.netcracker.edu.trainee.firstLab.service.comparators.PersonComparatorByID;
-import com.netcracker.edu.trainee.firstLab.sort.BubbleSort;
+import com.netcracker.edu.trainee.firstLab.service.sort.BubbleSort;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.vsu.lab.entities.IPerson;
@@ -26,7 +26,7 @@ public class testBubbleSortWithComparatorByID {
             array[i] = person;
         }
 
-        bubbleSort.doBubbleSort(array, personComparatorByID);
+        bubbleSort.doSort(array, personComparatorByID);
 
         for (int i = 0; i < array.length - 1; i++) {
             Assert.assertTrue(personComparatorByID.compare(array[i], array[i + 1]) == -1);

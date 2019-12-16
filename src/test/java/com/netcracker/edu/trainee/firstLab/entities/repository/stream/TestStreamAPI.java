@@ -6,6 +6,8 @@ import com.netcracker.edu.trainee.firstLab.service.repository.DynamicArray;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.Test;
+import ru.vsu.lab.entities.IDivision;
+import ru.vsu.lab.entities.IPerson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -65,21 +67,9 @@ public class TestStreamAPI {
     @Test
     public void testGetYearAndHowMuchPeopleInThisYear() {
         List<Person> list = collection.toList();
-        List<Group> group = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            group.add(new Group(list.get(i).getBirthdate().getYear(), 1));
-        }
-
-        Map<Integer, Long> map3 = group.stream()
-                .collect(Collectors.groupingBy(Group::getDate, Collectors.counting()));
-        map3.forEach((k, v) -> System.out.println(k + " - " + v));
-    }
-
-    @AllArgsConstructor
-    @Data
-    static class Group {
-        Integer date;
-        Integer people;
+        Map<Integer, Long> resultMap = list.stream()
+                .collect(Collectors.groupingBy(Person::getAge, Collectors.counting()));
+        resultMap.forEach((k, v) -> System.out.println(k + " - " + v));
     }
 
     /*
@@ -89,23 +79,9 @@ public class TestStreamAPI {
     @Test
     public void testCreateMapAndHowMuchTotalSalaryInDivision() {
         List<Person> list = collection.toList();
-        List<Div> div = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            div.add(new Div(list.get(i).getDivision().getName(), list.get(i).getSalary().intValue()));
-        }
-        Map<String, Integer> map = div.stream()
-                .collect(
-                        Collectors.groupingBy(Div::getName,
-                                Collectors.summingInt(Div::getSalary)));
-        map.forEach((k, v) -> System.out.println(k + " - " + v));
-
-    }
-
-    @AllArgsConstructor
-    @Data
-    static class Div {
-        String name;
-        Integer salary;
+        Map<IDivision, Long> resultMap = list.stream().collect(Collectors.groupingBy(Person::getDivision,
+                Collectors.summingLong(pr -> pr
+                        .getSalary()
+                        .intValueExact())));
     }
 }
-

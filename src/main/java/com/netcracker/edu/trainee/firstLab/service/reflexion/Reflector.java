@@ -1,6 +1,7 @@
 package com.netcracker.edu.trainee.firstLab.service.reflexion;
 
 import com.netcracker.edu.trainee.firstLab.service.annotations.LabInjector;
+import com.netcracker.edu.trainee.firstLab.service.exceptions.InjectorException;
 import ru.vsu.lab.repository.IRepository;
 
 import java.io.File;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 
 public class Reflector {
 
-    public static IRepository inject(IRepository repository) {
+    public static IRepository inject(IRepository repository) throws InjectorException {
         Field[] fields = repository.getClass().getDeclaredFields();
         List<Field> reflectedFields = new ArrayList<>();
         String separator = File.separator;
@@ -27,9 +28,7 @@ public class Reflector {
         try {
             scanner = new Scanner(file);
         } catch (FileNotFoundException e) {
-            System.out.println("File sort_properties not found!");
-            e.printStackTrace();
-            return repository;
+            throw new InjectorException("File sort_properties not found!");
         }
         scanner.useDelimiter(" = |\n");
         while (scanner.hasNext()) {
@@ -41,10 +40,8 @@ public class Reflector {
                     field.setAccessible(true);
                     try {
                         field.set(repository, Class.forName(className).newInstance());
-                    } catch (ClassNotFoundException | IllegalAccessException a) {
-                        System.out.println(a.getClass().getName());
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
+                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                        throw new InjectorException(e);
                     }
                 }
             }
